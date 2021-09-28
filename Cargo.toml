@@ -1,0 +1,9 @@
+[package]
+name = "kalendarilo"
+version = "0.1.0"
+edition = "2018"
+authors = ["SyiMyuZya <syimyuzya@gmail.com>"]
+license = "GPL-3.0-only"
+description = "Calculate Chinese lunisolar calendar using accurate astronomical data"
+
+[dependencies]
