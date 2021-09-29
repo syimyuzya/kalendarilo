@@ -2,7 +2,9 @@
 
 Calculate Chinese lunisolar calendar using accurate astronomical data (`data/TDBtimes.txt` from https://github.com/ytliu0/ChineseCalendar).
 
-## Example
+## Examples
+
+See the [docs](https://syimyuzya.github.io/kalendarilo/kalendarilo/) for more!
 
 ```rust
 use kalendarilo::Date;
