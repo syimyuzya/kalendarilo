@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["YearType","Indicates whether a year is a leap year or common year."]],"struct":[["Date","A calendar-independant date."]]});
