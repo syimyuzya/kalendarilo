@@ -1,6 +1,5 @@
 //! Calendar-independant date.
 
-use std::convert::TryFrom;
 use std::ops::{Add, Sub};
 
 /// A calendar-independant date.
