@@ -290,13 +290,13 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Tt</span>(<span class="kw">pub</span> <span class="ident">f64</span>);
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Tdb</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Tt</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tdb</span>: <span class="ident">Tdb</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tt</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tdb</span>: <span class="ident">Tdb</span>) -&gt; <span class="ident">Tt</span> {
         <span class="ident">Tt</span>(<span class="ident">tdb</span>.<span class="number">0</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Tai</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Tt</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tai</span>: <span class="ident">Tai</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tt</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tai</span>: <span class="ident">Tai</span>) -&gt; <span class="ident">Tt</span> {
         <span class="ident">Tt</span>(<span class="ident">tai</span>.<span class="number">0</span> <span class="op">+</span> <span class="number">32.184</span> <span class="op">/</span> <span class="number">86400.0</span>)
     }
 }
@@ -307,13 +307,13 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Tai</span>(<span class="kw">pub</span> <span class="ident">f64</span>);
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Tt</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Tai</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tt</span>: <span class="ident">Tt</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tai</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tt</span>: <span class="ident">Tt</span>) -&gt; <span class="ident">Tai</span> {
         <span class="ident">Tai</span>(<span class="ident">tt</span>.<span class="number">0</span> <span class="op">-</span> <span class="number">32.184</span> <span class="op">/</span> <span class="number">86400.0</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Tdb</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Tai</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tdb</span>: <span class="ident">Tdb</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tai</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">tdb</span>: <span class="ident">Tdb</span>) -&gt; <span class="ident">Tai</span> {
         <span class="ident">Tt::from</span>(<span class="ident">tdb</span>).<span class="ident">into</span>()
     }
 }
@@ -351,7 +351,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Does not currently support time before 1972-01-01 and will panic.</span>
     <span class="doccomment">/// Working on it.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">time</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">time</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Tai</span><span class="op">&gt;</span>,
     {
@@ -371,8 +371,8 @@
         }
 
         <span class="kw">let</span> <span class="ident">ls</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">leap_seconds</span>.<span class="ident">partition_point</span>(<span class="op">|</span><span class="ident">ls</span><span class="op">|</span> <span class="ident">ls</span>.<span class="ident">tai</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">tai</span>) {
-            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Ut</span>(<span class="ident">tai</span>.<span class="number">0</span> <span class="op">-</span> <span class="number">10.0</span> <span class="op">/</span> <span class="number">86400.0</span>),
-            <span class="ident">i</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">leap_seconds</span>[<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>],
+            <span class="number">0</span> =&gt; <span class="kw">return</span> <span class="ident">Ut</span>(<span class="ident">tai</span>.<span class="number">0</span> <span class="op">-</span> <span class="number">10.0</span> <span class="op">/</span> <span class="number">86400.0</span>),
+            <span class="ident">i</span> =&gt; <span class="kw-2">&amp;</span><span class="ident">leap_seconds</span>[<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>],
         };
         <span class="kw">let</span> <span class="ident">leap</span> <span class="op">=</span> (<span class="ident">tai</span>.<span class="number">0</span> <span class="op">-</span> <span class="ident">ls</span>.<span class="ident">tai</span>.<span class="number">0</span>).<span class="ident">min</span>(<span class="number">2.0</span>) <span class="op">/</span> <span class="number">2.0</span>;
         <span class="ident">Ut</span>(<span class="ident">tai</span>.<span class="number">0</span> <span class="op">-</span> (<span class="ident">ls</span>.<span class="ident">delta_secs</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">+</span> <span class="ident">leap</span>) <span class="op">/</span> <span class="number">86400.0</span>)
@@ -390,7 +390,7 @@
     <span class="doccomment">/// let ut = Ut::convert(tdb);</span>
     <span class="doccomment">/// assert_eq!((1999, 12, 30), ut.date_in_timezone(480).gregorian());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">date_in_timezone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tz_offset_minutes</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">date_in_timezone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tz_offset_minutes</span>: <span class="ident">i32</span>) -&gt; <span class="ident">Date</span> {
         <span class="kw">let</span> <span class="ident">jdn</span> <span class="op">=</span> (<span class="self">self</span>.<span class="number">0</span> <span class="op">+</span> <span class="ident">tz_offset_minutes</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">/</span> <span class="number">1440.0</span>).<span class="ident">round</span>() <span class="kw">as</span> <span class="ident">u32</span>;
         <span class="ident">Date::from_jdn</span>(<span class="ident">jdn</span>)
     }
@@ -432,14 +432,14 @@
     ];
     <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DATE_EXPIRES</span>: (<span class="ident">i32</span>, <span class="ident">i32</span>, <span class="ident">i32</span>) <span class="op">=</span> (<span class="number">2021</span>, <span class="number">12</span>, <span class="number">31</span>);
 
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Data</span> {
         <span class="kw">pub</span> <span class="ident">starts</span>: <span class="ident">Tai</span>,
         <span class="kw">pub</span> <span class="ident">leap_seconds</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">LeapSecond</span><span class="op">&gt;</span>,
         <span class="kw">pub</span> <span class="ident">expires</span>: <span class="ident">Tai</span>,
         <span class="kw">pub</span> <span class="ident">c2</span>: <span class="ident">f64</span>,
     }
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LeapSecond</span> {
         <span class="kw">pub</span> <span class="ident">tai</span>: <span class="ident">Tai</span>,
         <span class="kw">pub</span> <span class="ident">delta_secs</span>: <span class="ident">i32</span>,
@@ -453,7 +453,7 @@
     };
     <span class="kw">static</span> <span class="ident">INIT</span>: <span class="ident">Once</span> <span class="op">=</span> <span class="ident">Once::new</span>();
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Data</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Data</span> {
         <span class="ident">INIT</span>.<span class="ident">call_once</span>(<span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">starts</span> <span class="op">=</span>
                 <span class="ident">Tai</span>(<span class="ident">Date::from_gregorian</span>(<span class="number">1972</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">jdn</span>() <span class="kw">as</span> <span class="ident">f64</span> <span class="op">+</span> <span class="number">10.0</span> <span class="op">/</span> <span class="number">86400.0</span>);
@@ -484,7 +484,7 @@
         <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="ident">COMPUTED</span> }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">estimate</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Tt</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">tt</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">estimate</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Tt</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">tt</span>: <span class="ident">T</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">use</span> <span class="ident">std::f64::consts::PI</span>;
         <span class="kw">let</span> <span class="ident">tt</span> <span class="op">=</span> <span class="ident">tt</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> (<span class="ident">tt</span>.<span class="number">0</span> <span class="op">-</span> <span class="number">2451544.5</span>) <span class="op">/</span> <span class="number">365.2425</span> <span class="op">+</span> <span class="number">2000.0</span>;

@@ -438,7 +438,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(Ok((1999, Common(11), 25)), annus.ymd_for(date));</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Annus</span> {
     <span class="doccomment">/// 序號，為該歲大部分時段所在的公元年</span>
     <span class="kw">pub</span> <span class="ident">annus</span>: <span class="ident">i32</span>,
@@ -448,7 +448,7 @@
     <span class="kw">pub</span> <span class="ident">months</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">NewMoon</span><span class="op">&gt;</span>,
 }
 <span class="doccomment">/// 月首信息</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NewMoon</span> {
     <span class="doccomment">/// 月名</span>
     <span class="kw">pub</span> <span class="ident">month</span>: <span class="ident">Month</span>,
@@ -456,25 +456,25 @@
     <span class="kw">pub</span> <span class="ident">date</span>: <span class="ident">Date</span>,
 }
 <span class="doccomment">/// 月名，`Common` 為平月，`Leap` 為閏月。</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Month</span> {
     <span class="ident">Common</span>(<span class="ident">i32</span>),
     <span class="ident">Leap</span>(<span class="ident">i32</span>),
 }
 <span class="kw">impl</span> <span class="ident">Month</span> {
     <span class="doccomment">/// 取得月序號，無論平閏。</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">num</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">num</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
         <span class="kw">use</span> <span class="ident">Month</span>::<span class="kw-2">*</span>;
         <span class="kw-2">*</span><span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Common</span>(<span class="ident">v</span>) <span class="op">|</span> <span class="ident">Leap</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">v</span>,
+            <span class="ident">Common</span>(<span class="ident">v</span>) <span class="op">|</span> <span class="ident">Leap</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>,
         }
     }
     <span class="doccomment">/// 閏月為 `true`，平月為 `false`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_leap</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_leap</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident"><span class="self">Self</span>::Leap</span>(<span class="kw">_</span>))
     }
     <span class="doccomment">/// 取得月名的文本形式，十一、十二月稱「冬月」「臘月」。</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
         <span class="ident">fmt::month</span>(<span class="kw-2">*</span><span class="self">self</span>)
     }
 }
@@ -491,7 +491,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let annus = Annus::new(2000).unwrap();</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">annus</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">annus</span>: <span class="ident">i32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">Month</span>::<span class="kw-2">*</span>;
 
         <span class="kw">let</span> <span class="ident">ephemeris</span> <span class="op">=</span> <span class="ident">ephemeris::Annus::get</span>(<span class="ident">annus</span>)<span class="question-mark">?</span>;
@@ -505,9 +505,9 @@
         <span class="kw">let</span> <span class="ident">m11_idx</span> <span class="op">=</span> <span class="ident">new_moon_dates</span>.<span class="ident">partition_point</span>(<span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span> <span class="op">&lt;</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">ws</span>) <span class="op">-</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="ident">m11n_idx</span> <span class="op">=</span> <span class="ident">new_moon_dates</span>.<span class="ident">partition_point</span>(<span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span> <span class="op">&lt;</span> <span class="kw-2">&amp;</span><span class="ident">ws_next</span>) <span class="op">-</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">needs_leap</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">m11n_idx</span> <span class="op">-</span> <span class="ident">m11_idx</span> {
-            <span class="number">12</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
-            <span class="number">13</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;{} months between winter solstices&quot;</span>, <span class="ident">m11n_idx</span> <span class="op">-</span> <span class="ident">m11_idx</span>),
+            <span class="number">12</span> =&gt; <span class="bool-val">false</span>,
+            <span class="number">13</span> =&gt; <span class="bool-val">true</span>,
+            <span class="kw">_</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{} months between winter solstices&quot;</span>, <span class="ident">m11n_idx</span> <span class="op">-</span> <span class="ident">m11_idx</span>),
         };
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">months</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">m11n_idx</span> <span class="op">-</span> <span class="ident">m11_idx</span>);
@@ -552,7 +552,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(2000, annus.annus);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_date</span>(<span class="ident">date</span>: <span class="ident">Date</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_date</span>(<span class="ident">date</span>: <span class="ident">Date</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">y</span> <span class="op">=</span> <span class="ident">date</span>.<span class="ident">gregorian</span>().<span class="number">0</span>;
         <span class="kw">loop</span> {
             <span class="kw">let</span> <span class="ident">annus</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">y</span>)<span class="question-mark">?</span>;
@@ -583,7 +583,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(Ok((1999, Common(11), 25)), annus.ymd_for(date));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ymd_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">date</span>: <span class="ident">Date</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">Month</span>, <span class="ident">i32</span>), <span class="ident">OtherAnnus</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ymd_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">date</span>: <span class="ident">Date</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">Month</span>, <span class="ident">i32</span>), <span class="ident">OtherAnnus</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">begin</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">months</span>[<span class="number">0</span>].<span class="ident">date</span>;
         <span class="kw">let</span> <span class="ident">end</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">months</span>.<span class="ident">last</span>().<span class="ident">unwrap</span>().<span class="ident">date</span>;
 
@@ -629,7 +629,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(Ok((2000, 22, 10)), annus.solar_term_for(date)); // 冬至過後第 10 天</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">solar_term_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">date</span>: <span class="ident">Date</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>, <span class="ident">i32</span>), <span class="ident">SolarTermErr</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">solar_term_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">date</span>: <span class="ident">Date</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>, <span class="ident">i32</span>), <span class="ident">SolarTermErr</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident"><span class="self">self</span>::OtherAnnus</span>::<span class="kw-2">*</span>;
         <span class="kw">use</span> <span class="ident">SolarTermErr</span>::<span class="kw-2">*</span>;
         <span class="kw">if</span> <span class="ident">date</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">months</span>[<span class="number">0</span>].<span class="ident">date</span> {
@@ -672,7 +672,7 @@
 }
 
 <span class="doccomment">/// 將給定曆表時間轉為北京時間（UTC+8）日期。</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">date_cst</span>(<span class="ident">tdb</span>: <span class="ident">Tdb</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">date_cst</span>(<span class="ident">tdb</span>: <span class="ident">Tdb</span>) -&gt; <span class="ident">Date</span> {
     <span class="ident">Ut::convert</span>(<span class="ident">tdb</span>).<span class="ident">date_in_timezone</span>(<span class="number">480</span>)
 }
 
@@ -685,7 +685,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(1, sexagenary_for_year(-2696));</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sexagenary_for_year</span>(<span class="ident">year</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sexagenary_for_year</span>(<span class="ident">year</span>: <span class="ident">i32</span>) -&gt; <span class="ident">i32</span> {
     (<span class="ident">year</span> <span class="op">+</span> <span class="number">2696</span>).<span class="ident">rem_euclid</span>(<span class="number">60</span>) <span class="op">+</span> <span class="number">1</span>
 }
 

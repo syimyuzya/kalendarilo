@@ -137,7 +137,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(&quot;乙巳&quot;, chinese::fmt::sexagenary(42));</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sexagenary</span>(<span class="ident">num</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sexagenary</span>(<span class="ident">num</span>: <span class="ident">i32</span>) -&gt; <span class="ident">String</span> {
     <span class="kw">static</span> <span class="ident">NAME1</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[<span class="string">&quot;癸&quot;</span>, <span class="string">&quot;甲&quot;</span>, <span class="string">&quot;乙&quot;</span>, <span class="string">&quot;丙&quot;</span>, <span class="string">&quot;丁&quot;</span>, <span class="string">&quot;戊&quot;</span>, <span class="string">&quot;己&quot;</span>, <span class="string">&quot;庚&quot;</span>, <span class="string">&quot;辛&quot;</span>, <span class="string">&quot;壬&quot;</span>];
     <span class="kw">static</span> <span class="ident">NAME2</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[
         <span class="string">&quot;亥&quot;</span>, <span class="string">&quot;子&quot;</span>, <span class="string">&quot;丑&quot;</span>, <span class="string">&quot;寅&quot;</span>, <span class="string">&quot;卯&quot;</span>, <span class="string">&quot;辰&quot;</span>, <span class="string">&quot;巳&quot;</span>, <span class="string">&quot;午&quot;</span>, <span class="string">&quot;未&quot;</span>, <span class="string">&quot;申&quot;</span>, <span class="string">&quot;酉&quot;</span>, <span class="string">&quot;戌&quot;</span>,
@@ -159,19 +159,19 @@
 <span class="doccomment">/// # Panics</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 若月序號不在 `1..=12` 間則 panic。</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">month</span>(<span class="ident">m</span>: <span class="ident"><span class="kw">super</span>::Month</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">month</span>(<span class="ident">m</span>: <span class="ident"><span class="kw">super</span>::Month</span>) -&gt; <span class="ident">String</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rt</span> <span class="op">=</span> <span class="ident">String::new</span>();
     <span class="kw">if</span> <span class="ident">m</span>.<span class="ident">is_leap</span>() {
         <span class="ident">rt</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;閏&quot;</span>;
     }
     <span class="kw">let</span> <span class="ident">num</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">num</span>();
     <span class="ident">rt</span> <span class="op">+</span><span class="op">=</span> <span class="kw">match</span> <span class="ident">num</span> {
-        <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;正&quot;</span>,
-        <span class="number">2</span>..<span class="op">=</span><span class="number">9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NUM_CHINESE</span>[<span class="ident">num</span> <span class="kw">as</span> <span class="ident">usize</span>],
-        <span class="number">10</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;十&quot;</span>,
-        <span class="number">11</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;冬&quot;</span>,
-        <span class="number">12</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;臘&quot;</span>,
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;month {} not in 1..=12&quot;</span>, <span class="ident">num</span>),
+        <span class="number">1</span> =&gt; <span class="string">&quot;正&quot;</span>,
+        <span class="number">2</span>..<span class="op">=</span><span class="number">9</span> =&gt; <span class="ident">NUM_CHINESE</span>[<span class="ident">num</span> <span class="kw">as</span> <span class="ident">usize</span>],
+        <span class="number">10</span> =&gt; <span class="string">&quot;十&quot;</span>,
+        <span class="number">11</span> =&gt; <span class="string">&quot;冬&quot;</span>,
+        <span class="number">12</span> =&gt; <span class="string">&quot;臘&quot;</span>,
+        <span class="kw">_</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;month {} not in 1..=12&quot;</span>, <span class="ident">num</span>),
     };
     <span class="ident">rt</span> <span class="op">+</span><span class="op">=</span> <span class="string">&quot;月&quot;</span>;
     <span class="ident">rt</span>
@@ -192,14 +192,14 @@
 <span class="doccomment">/// # Panics</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 若日序號不在 `1..=30` 間則 panic。</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">day</span>(<span class="ident">d</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">day</span>(<span class="ident">d</span>: <span class="ident">i32</span>) -&gt; <span class="ident">String</span> {
     <span class="kw">match</span> <span class="ident">d</span> {
-        <span class="number">1</span>..<span class="op">=</span><span class="number">10</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;初&quot;</span>,
-        <span class="number">11</span>..<span class="op">=</span><span class="number">19</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;十&quot;</span>,
-        <span class="number">20</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;二&quot;</span>,
-        <span class="number">21</span>..<span class="op">=</span><span class="number">29</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;廿&quot;</span>,
-        <span class="number">30</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;三&quot;</span>,
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;day {} not in 1..=30&quot;</span>, <span class="ident">d</span>),
+        <span class="number">1</span>..<span class="op">=</span><span class="number">10</span> =&gt; <span class="string">&quot;初&quot;</span>,
+        <span class="number">11</span>..<span class="op">=</span><span class="number">19</span> =&gt; <span class="string">&quot;十&quot;</span>,
+        <span class="number">20</span> =&gt; <span class="string">&quot;二&quot;</span>,
+        <span class="number">21</span>..<span class="op">=</span><span class="number">29</span> =&gt; <span class="string">&quot;廿&quot;</span>,
+        <span class="number">30</span> =&gt; <span class="string">&quot;三&quot;</span>,
+        <span class="kw">_</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;day {} not in 1..=30&quot;</span>, <span class="ident">d</span>),
     }
     .<span class="ident">to_owned</span>()
         <span class="op">+</span> <span class="ident">NUM_CHINESE</span>[(<span class="ident">d</span> <span class="op">%</span> <span class="number">10</span>) <span class="kw">as</span> <span class="ident">usize</span>]
@@ -214,7 +214,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(&quot;穀雨&quot;, chinese::fmt::solar_term(6));</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">solar_term</span>(<span class="ident">term</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">solar_term</span>(<span class="ident">term</span>: <span class="ident">i32</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
     <span class="kw">const</span> <span class="ident">NAMES</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[
         <span class="string">&quot;大寒&quot;</span>, <span class="string">&quot;立春&quot;</span>, <span class="string">&quot;雨水&quot;</span>, <span class="string">&quot;驚蟄&quot;</span>, <span class="string">&quot;春分&quot;</span>, <span class="string">&quot;清明&quot;</span>, <span class="string">&quot;穀雨&quot;</span>, <span class="string">&quot;立夏&quot;</span>, <span class="string">&quot;小滿&quot;</span>, <span class="string">&quot;芒種&quot;</span>, <span class="string">&quot;夏至&quot;</span>,
         <span class="string">&quot;小暑&quot;</span>, <span class="string">&quot;大暑&quot;</span>, <span class="string">&quot;立秋&quot;</span>, <span class="string">&quot;處暑&quot;</span>, <span class="string">&quot;白露&quot;</span>, <span class="string">&quot;秋分&quot;</span>, <span class="string">&quot;寒露&quot;</span>, <span class="string">&quot;霜降&quot;</span>, <span class="string">&quot;立冬&quot;</span>, <span class="string">&quot;小雪&quot;</span>, <span class="string">&quot;大雪&quot;</span>,

@@ -2,18 +2,18 @@
 <p>Note: 為方便處理諸多術語，本模塊文檔用中文。</p>
 <p>本程序採用預製好的天文曆表資料編算夏曆，見 <a href="ephemeris/index.html" title="ephemeris"><code>ephemeris</code></a>。</p>
 </div></details><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="mod" href="ephemeris/index.html" title="kalendarilo::chinese::ephemeris mod">ephemeris</a></div><div class="item-right docblock-short"><p>月相節氣曆表數據</p>
-</div><div class="item-left module-item"><a class="mod" href="fmt/index.html" title="kalendarilo::chinese::fmt mod">fmt</a></div><div class="item-right docblock-short"><p>格式化日期相關功能</p>
-</div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="struct" href="struct.Annus.html" title="kalendarilo::chinese::Annus struct">Annus</a></div><div class="item-right docblock-short"><p>「歲」，相鄰兩冬至間的時段，或自冬至所在月（十一月）至下一冬至前月（十月或閏十月）的時段。</p>
-</div><div class="item-left module-item"><a class="struct" href="struct.NewMoon.html" title="kalendarilo::chinese::NewMoon struct">NewMoon</a></div><div class="item-right docblock-short"><p>月首信息</p>
-</div></div><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="enum" href="enum.Month.html" title="kalendarilo::chinese::Month enum">Month</a></div><div class="item-right docblock-short"><p>月名，<code>Common</code> 為平月，<code>Leap</code> 為閏月。</p>
-</div><div class="item-left module-item"><a class="enum" href="enum.OtherAnnus.html" title="kalendarilo::chinese::OtherAnnus enum">OtherAnnus</a></div><div class="item-right docblock-short"><p>表示給定日期不在該歲，並指出其在前還是在後。</p>
-</div><div class="item-left module-item"><a class="enum" href="enum.SolarTermErr.html" title="kalendarilo::chinese::SolarTermErr enum">SolarTermErr</a></div><div class="item-right docblock-short"><p>表示給定日期不在該歲，或曆表無法取得節氣數據。</p>
-</div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="fn" href="fn.date_cst.html" title="kalendarilo::chinese::date_cst fn">date_cst</a></div><div class="item-right docblock-short"><p>將給定曆表時間轉為北京時間（UTC+8）日期。</p>
-</div><div class="item-left module-item"><a class="fn" href="fn.sexagenary_for_year.html" title="kalendarilo::chinese::sexagenary_for_year fn">sexagenary_for_year</a></div><div class="item-right docblock-short"><p>取得所給公元年的干支。</p>
-</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="kalendarilo" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="ephemeris/index.html" title="kalendarilo::chinese::ephemeris mod">ephemeris</a></div><div class="item-right docblock-short"><p>月相節氣曆表數據</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="fmt/index.html" title="kalendarilo::chinese::fmt mod">fmt</a></div><div class="item-right docblock-short"><p>格式化日期相關功能</p>
+</div></div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Annus.html" title="kalendarilo::chinese::Annus struct">Annus</a></div><div class="item-right docblock-short"><p>「歲」，相鄰兩冬至間的時段，或自冬至所在月（十一月）至下一冬至前月（十月或閏十月）的時段。</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.NewMoon.html" title="kalendarilo::chinese::NewMoon struct">NewMoon</a></div><div class="item-right docblock-short"><p>月首信息</p>
+</div></div></div><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Month.html" title="kalendarilo::chinese::Month enum">Month</a></div><div class="item-right docblock-short"><p>月名，<code>Common</code> 為平月，<code>Leap</code> 為閏月。</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.OtherAnnus.html" title="kalendarilo::chinese::OtherAnnus enum">OtherAnnus</a></div><div class="item-right docblock-short"><p>表示給定日期不在該歲，並指出其在前還是在後。</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.SolarTermErr.html" title="kalendarilo::chinese::SolarTermErr enum">SolarTermErr</a></div><div class="item-right docblock-short"><p>表示給定日期不在該歲，或曆表無法取得節氣數據。</p>
+</div></div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.date_cst.html" title="kalendarilo::chinese::date_cst fn">date_cst</a></div><div class="item-right docblock-short"><p>將給定曆表時間轉為北京時間（UTC+8）日期。</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.sexagenary_for_year.html" title="kalendarilo::chinese::sexagenary_for_year fn">sexagenary_for_year</a></div><div class="item-right docblock-short"><p>取得所給公元年的干支。</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="kalendarilo" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script>
 </body></html>

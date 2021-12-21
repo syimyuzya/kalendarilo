@@ -2,7 +2,7 @@
 <p>Currently, this crate mainly supports conversion into Chinese lunisolar
 calendar (modern version) since 1973, using modern astronomical data for
 accurate prediction.</p>
-<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+<h2 id="examples" class="section-header"><a href="#examples">Examples</a></h2>
 <p>Basic usage with <a href="date/struct.Date.html"><code>Date</code></a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">kalendarilo::Date</span>;
@@ -20,7 +20,7 @@ accurate prediction.</p>
 <span class="kw">let</span> <span class="ident">annus</span> <span class="op">=</span> <span class="ident">Annus::from_date</span>(<span class="ident">date</span>).<span class="ident">unwrap</span>();
 
 <span class="macro">assert_eq!</span>(<span class="prelude-val">Ok</span>((<span class="number">1999</span>, <span class="ident">Common</span>(<span class="number">11</span>), <span class="number">25</span>)), <span class="ident">annus</span>.<span class="ident">ymd_for</span>(<span class="ident">date</span>));</code></pre></div>
-<h1 id="planned-features" class="section-header"><a href="#planned-features">Planned features</a></h1>
+<h2 id="planned-features" class="section-header"><a href="#planned-features">Planned features</a></h2>
 <ul>
 <li>Gregorian computus (for calculating date of Easter)
 <ul>
@@ -34,11 +34,11 @@ standard version in some corner cases)</li>
 <p>I wrote this primarily for my own use, so the design and development of
 this crate will depend heavily on my personal need.</p>
 </div></details><h2 id="reexports" class="section-header"><a href="#reexports">Re-exports</a></h2>
-<div class="item-table"><div class="item-left import-item"><code>pub use date::<a class="struct" href="date/struct.Date.html" title="struct kalendarilo::date::Date">Date</a>;</code></div><div class="item-right docblock-short"></div><div class="item-left import-item"><code>pub use date::<a class="enum" href="date/enum.YearType.html" title="enum kalendarilo::date::YearType">YearType</a>;</code></div><div class="item-right docblock-short"></div></div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="mod" href="chinese/index.html" title="kalendarilo::chinese mod">chinese</a></div><div class="item-right docblock-short"><p>Chinese calendar</p>
-</div><div class="item-left module-item"><a class="mod" href="date/index.html" title="kalendarilo::date mod">date</a></div><div class="item-right docblock-short"><p>Calendar-independant date.</p>
-</div><div class="item-left module-item"><a class="mod" href="time_scales/index.html" title="kalendarilo::time_scales mod">time_scales</a></div><div class="item-right docblock-short"><p>Deals with different time scales, specifically, conversion from TDB/TT into
+<div class="item-table"><div class="item-row"><div class="item-left import-item"><code>pub use date::<a class="struct" href="date/struct.Date.html" title="struct kalendarilo::date::Date">Date</a>;</code></div><div class="item-right docblock-short"></div></div><div class="item-row"><div class="item-left import-item"><code>pub use date::<a class="enum" href="date/enum.YearType.html" title="enum kalendarilo::date::YearType">YearType</a>;</code></div><div class="item-right docblock-short"></div></div></div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="chinese/index.html" title="kalendarilo::chinese mod">chinese</a></div><div class="item-right docblock-short"><p>Chinese calendar</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="date/index.html" title="kalendarilo::date mod">date</a></div><div class="item-right docblock-short"><p>Calendar-independant date.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="time_scales/index.html" title="kalendarilo::time_scales mod">time_scales</a></div><div class="item-right docblock-short"><p>Deals with different time scales, specifically, conversion from TDB/TT into
 UT (UTC or UT1).</p>
-</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="kalendarilo" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="kalendarilo" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
     <script src="../main.js"></script>
 </body></html>
