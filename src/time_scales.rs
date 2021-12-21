@@ -72,7 +72,6 @@ pub struct Ut(pub f64);
 
 impl Ut {
     // XXX Liveri `Enum`-n por distingi inter UTC & UT1
-    // TODO Ekzemplo
     /// Tries to convert a TAI (or other time scale easily convertible to TAI)
     /// into UT.
     ///
