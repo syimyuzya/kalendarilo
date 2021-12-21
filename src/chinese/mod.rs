@@ -27,7 +27,7 @@ pub mod fmt;
 ///
 /// assert_eq!(Ok((1999, Common(11), 25)), annus.ymd_for(date));
 /// ```
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Annus {
     /// 序號，為該歲大部分時段所在的公元年
     pub annus: i32,
@@ -37,7 +37,7 @@ pub struct Annus {
     pub months: Vec<NewMoon>,
 }
 /// 月首信息
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub struct NewMoon {
     /// 月名
     pub month: Month,
@@ -45,7 +45,7 @@ pub struct NewMoon {
     pub date: Date,
 }
 /// 月名，`Common` 為平月，`Leap` 為閏月。
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum Month {
     Common(i32),
     Leap(i32),

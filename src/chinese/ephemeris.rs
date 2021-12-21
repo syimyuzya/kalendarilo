@@ -9,7 +9,7 @@ use std::sync::Once;
 use crate::time_scales::Tdb;
 
 /// 保存一歲的曆表數據
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Annus {
     /// 序號，為該歲大部分時段所在公元年
     pub annus: i32,
@@ -108,6 +108,8 @@ impl RawDataError {
     }
 }
 
+impl std::error::Error for RawDataError {}
+
 impl std::fmt::Display for RawDataError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -124,6 +126,8 @@ enum ErrorType {
     InvalidFloat(ParseFloatError),
     MissingField,
 }
+
+impl std::error::Error for ErrorType {}
 
 impl std::fmt::Display for ErrorType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

@@ -5,7 +5,7 @@ use std::ops::{Add, Sub};
 /// A calendar-independant date.
 ///
 /// Supported range begins from January 1, 4713 BC, proleptic Julian calendar.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, Ord, PartialOrd)]
 pub struct Date {
     jdn: u32,
 }
@@ -164,7 +164,7 @@ impl Sub<Date> for Date {
 }
 
 /// Indicates whether a year is a leap year or common year.
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum YearType {
     Common,
     Leap,

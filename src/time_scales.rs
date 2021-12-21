@@ -170,14 +170,14 @@ mod leap_seconds {
     ];
     pub const DATE_EXPIRES: (i32, i32, i32) = (2021, 12, 31);
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     pub struct Data {
         pub starts: Tai,
         pub leap_seconds: Vec<LeapSecond>,
         pub expires: Tai,
         pub c2: f64,
     }
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     pub struct LeapSecond {
         pub tai: Tai,
         pub delta_secs: i32,
