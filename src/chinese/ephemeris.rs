@@ -28,8 +28,8 @@ impl Annus {
     /// 無數據則返回 `None`。
     pub fn get(annus: i32) -> Option<&'static Self> {
         INIT.call_once(|| {
-            let res = parse_raw_data()
-                .unwrap_or_else(|e| panic!("error parsing ephemeris data: {:?}", e));
+            let res =
+                parse_raw_data().unwrap_or_else(|e| panic!("error parsing ephemeris data: {}", e));
             unsafe {
                 DATA = res;
             }
@@ -108,11 +108,32 @@ impl RawDataError {
     }
 }
 
+impl std::fmt::Display for RawDataError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "line {}, field {}: {}",
+            self.line_num, self.field_num, self.reason
+        )
+    }
+}
+
 #[derive(Debug)]
 enum ErrorType {
     InvalidInt(ParseIntError),
     InvalidFloat(ParseFloatError),
     MissingField,
+}
+
+impl std::fmt::Display for ErrorType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use ErrorType::*;
+        match self {
+            InvalidInt(e) => write!(f, "cannot parse int: {}", e),
+            InvalidFloat(e) => write!(f, "cannot parse float: {}", e),
+            MissingField => write!(f, "missing field"),
+        }
+    }
 }
 
 #[cfg(test)]
