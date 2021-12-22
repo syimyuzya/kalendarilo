@@ -101,7 +101,7 @@ impl Ut {
         } = leap_seconds::data();
 
         if tai < starts {
-            panic!("UT before UTC (1972-01-01) not supported yet");
+            todo!("UT before UTC (1972-01-01)");
         } else if tai > expires {
             let diff = leap_seconds::estimate(tai) + c2;
             return Ut(tai.0 - diff / 86400.0); // NOTE UT1, ne UTC

@@ -55,7 +55,8 @@ fn parse_raw_data() -> Result<Vec<Annus>, RawDataError> {
                 .map_err(|e| RawDataError::new(line_num, 1, ErrorType::InvalidInt(e)))?,
         };
         // XXX dumtempe limita por pli rapida pravalorizado
-        if !(1970..=2050).contains(&annus) {
+        // (Ankaŭ pro la ankoraŭ ne realigita UT-taksado antaŭ ol 1972)
+        if !(1973..=2050).contains(&annus) {
             continue;
         }
         let jd0 = require_next_f64(&mut it, line_num, 2)?;
