@@ -231,11 +231,7 @@ impl Annus {
             for (idx, &tdb) in (22..24).zip(&last_annus.solar_term[22..24]).rev() {
                 let term_start = date_cst(tdb);
                 if date >= term_start {
-                    return Ok((
-                        self.annus - 1,
-                        (idx as i32 + 21) % 24 + 1,
-                        date - term_start,
-                    ));
+                    return Ok((self.annus - 1, (idx + 21) % 24 + 1, date - term_start));
                 }
             }
             panic!("incorrect data for annus {}", self.annus - 1);
