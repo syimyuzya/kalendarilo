@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["chinese","Chinese calendar"],["date","Calendar-independant date."],["time_scales","Deals with different time scales, specifically, conversion from TDB/TT into UT (UTC or UT1)."]]});
+window.SIDEBAR_ITEMS = {"mod":[["chinese","Chinese calendar"],["date","Calendar-independant date."],["time_scales","Deals with different time scales, specifically, conversion from TDB/TT into UT (UTC or UT1)."]]};

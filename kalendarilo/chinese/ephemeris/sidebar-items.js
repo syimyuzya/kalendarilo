@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Annus","保存一歲的曆表數據"]]});
+window.SIDEBAR_ITEMS = {"struct":[["Annus","保存一歲的曆表數據"]]};
