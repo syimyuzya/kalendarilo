@@ -270,6 +270,18 @@
 <a href="#270" id="270">270</a>
 <a href="#271" id="271">271</a>
 <a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Calendar-independant date.
 
 </span><span class="kw">use </span>std::ops::{Add, Sub};
@@ -401,7 +413,7 @@
         <span class="kw">let </span>dn = ordinal_day_number(m, d, y_type);
         <span class="kw">let </span>dow = <span class="self">self</span>.day_of_week();
         <span class="kw">let </span>dow1 = (dow - dn).rem_euclid(<span class="number">7</span>) + <span class="number">1</span>;
-        <span class="kw">if </span>dow1 &gt;= <span class="number">4 </span>&amp;&amp; dow1 - <span class="number">1 </span>+ dn &lt;= <span class="number">7 </span>{
+        <span class="kw">if </span>dow1 &gt; <span class="number">4 </span>&amp;&amp; dow1 - <span class="number">1 </span>+ dn &lt;= <span class="number">7 </span>{
             <span class="kw">use </span>std::cmp::Ordering::<span class="kw-2">*</span>;
             <span class="kw">return match </span>dow1.cmp(<span class="kw-2">&amp;</span><span class="number">6</span>) {
                 Less =&gt; (y - <span class="number">1</span>, <span class="number">53</span>),
@@ -414,7 +426,7 @@
             <span class="kw">return </span>(y + <span class="number">1</span>, <span class="number">1</span>);
         }
 
-        (y, (dn + <span class="number">1 </span>- dow1) / <span class="number">7 </span>+ <span class="number">1</span>)
+        (y, (dow1 + dn - <span class="number">2</span>) / <span class="number">7 </span>+ (dow1 &lt;= <span class="number">4</span>) <span class="kw">as </span>i32)
     }
 }
 
@@ -461,7 +473,7 @@
     day + <span class="kw">match </span>month {
         <span class="number">1 </span>=&gt; <span class="number">0</span>,
         <span class="number">2 </span>=&gt; <span class="number">31</span>,
-        <span class="kw">_ </span>=&gt; <span class="number">30 </span>* (month - <span class="number">1</span>) + (month - <span class="number">8 </span>+ month % <span class="number">2</span>) / <span class="number">2 </span>+ <span class="number">2 </span>+ year_type.is_leap() <span class="kw">as </span>i32,
+        <span class="kw">_ </span>=&gt; <span class="number">59 </span>+ (<span class="number">153 </span>* (month - <span class="number">3</span>) + <span class="number">2</span>) / <span class="number">5 </span>+ year_type.is_leap() <span class="kw">as </span>i32,
     }
 }
 
@@ -511,13 +523,25 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>to_year_week() {
-        <span class="kw">let </span>date = Date::from_gregorian(<span class="number">1982</span>, <span class="number">1</span>, <span class="number">1</span>).unwrap();
-        <span class="macro">assert_eq!</span>((<span class="number">1981</span>, <span class="number">53</span>), date.year_week_gregorian());
-        <span class="kw">let </span>date = Date::from_gregorian(<span class="number">1980</span>, <span class="number">12</span>, <span class="number">31</span>).unwrap();
-        <span class="macro">assert_eq!</span>((<span class="number">1981</span>, <span class="number">1</span>), date.year_week_gregorian());
+        <span class="kw">for </span>((y, m, d), expected) <span class="kw">in </span>[
+            ((<span class="number">1980</span>, <span class="number">12</span>, <span class="number">28</span>), (<span class="number">1980</span>, <span class="number">52</span>)),
+            ((<span class="number">1980</span>, <span class="number">12</span>, <span class="number">31</span>), (<span class="number">1981</span>, <span class="number">1</span>)),
+            ((<span class="number">1981</span>, <span class="number">1</span>, <span class="number">1</span>), (<span class="number">1981</span>, <span class="number">1</span>)),
+            ((<span class="number">1981</span>, <span class="number">1</span>, <span class="number">4</span>), (<span class="number">1981</span>, <span class="number">1</span>)),
+            ((<span class="number">1981</span>, <span class="number">1</span>, <span class="number">5</span>), (<span class="number">1981</span>, <span class="number">2</span>)),
+            ((<span class="number">1981</span>, <span class="number">12</span>, <span class="number">31</span>), (<span class="number">1981</span>, <span class="number">53</span>)),
+            ((<span class="number">1982</span>, <span class="number">1</span>, <span class="number">1</span>), (<span class="number">1981</span>, <span class="number">53</span>)),
+        ] {
+            <span class="kw">let </span>date = Date::from_gregorian(y, m, d).unwrap();
+            <span class="macro">assert_eq!</span>(expected, date.year_week_gregorian(), <span class="string">&quot;{y:04}-{m:02}-{d:02}&quot;</span>);
+        }
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">6</span>..=<span class="number">12 </span>{
             <span class="kw">let </span>date = Date::from_gregorian(<span class="number">2021</span>, <span class="number">9</span>, i).unwrap();
             <span class="macro">assert_eq!</span>((<span class="number">2021</span>, <span class="number">36</span>), date.year_week_gregorian(), <span class="string">&quot;2021-09-{:02}&quot;</span>, i);
+        }
+        <span class="kw">for </span>(d, w) <span class="kw">in </span>[(<span class="number">12</span>, <span class="number">10</span>), (<span class="number">13</span>, <span class="number">11</span>)] {
+            <span class="kw">let </span>date = Date::from_gregorian(<span class="number">2023</span>, <span class="number">3</span>, d).unwrap();
+            <span class="macro">assert_eq!</span>((<span class="number">2023</span>, w), date.year_week_gregorian(), <span class="string">&quot;2023-03-{d:02}&quot;</span>);
         }
     }
 
