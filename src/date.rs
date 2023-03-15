@@ -129,7 +129,7 @@ impl Date {
         let dn = ordinal_day_number(m, d, y_type);
         let dow = self.day_of_week();
         let dow1 = (dow - dn).rem_euclid(7) + 1;
-        if dow1 >= 4 && dow1 - 1 + dn <= 7 {
+        if dow1 > 4 && dow1 - 1 + dn <= 7 {
             use std::cmp::Ordering::*;
             return match dow1.cmp(&6) {
                 Less => (y - 1, 53),
@@ -142,7 +142,7 @@ impl Date {
             return (y + 1, 1);
         }
 
-        (y, (dn + 1 - dow1) / 7 + 1)
+        (y, (dow1 + dn - 2) / 7 + (dow1 <= 4) as i32)
     }
 }
 
@@ -189,7 +189,7 @@ fn ordinal_day_number(month: i32, day: i32, year_type: YearType) -> i32 {
     day + match month {
         1 => 0,
         2 => 31,
-        _ => 30 * (month - 1) + (month - 8 + month % 2) / 2 + 2 + year_type.is_leap() as i32,
+        _ => 59 + (153 * (month - 3) + 2) / 5 + year_type.is_leap() as i32,
     }
 }
 
@@ -239,13 +239,25 @@ mod tests {
 
     #[test]
     fn to_year_week() {
-        let date = Date::from_gregorian(1982, 1, 1).unwrap();
-        assert_eq!((1981, 53), date.year_week_gregorian());
-        let date = Date::from_gregorian(1980, 12, 31).unwrap();
-        assert_eq!((1981, 1), date.year_week_gregorian());
+        for ((y, m, d), expected) in [
+            ((1980, 12, 28), (1980, 52)),
+            ((1980, 12, 31), (1981, 1)),
+            ((1981, 1, 1), (1981, 1)),
+            ((1981, 1, 4), (1981, 1)),
+            ((1981, 1, 5), (1981, 2)),
+            ((1981, 12, 31), (1981, 53)),
+            ((1982, 1, 1), (1981, 53)),
+        ] {
+            let date = Date::from_gregorian(y, m, d).unwrap();
+            assert_eq!(expected, date.year_week_gregorian(), "{y:04}-{m:02}-{d:02}");
+        }
         for i in 6..=12 {
             let date = Date::from_gregorian(2021, 9, i).unwrap();
             assert_eq!((2021, 36), date.year_week_gregorian(), "2021-09-{:02}", i);
+        }
+        for (d, w) in [(12, 10), (13, 11)] {
+            let date = Date::from_gregorian(2023, 3, d).unwrap();
+            assert_eq!((2023, w), date.year_week_gregorian(), "2023-03-{d:02}");
         }
     }
 
