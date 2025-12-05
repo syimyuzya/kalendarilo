@@ -9,20 +9,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url:  ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v6
+      - name: Build docs
+        run: cargo doc --all --no-deps
+      - uses: actions/upload-pages-artifact@v4
         with:
-          toolchain: stable
-          profile: minimal
-          override: true
-          components: rustfmt, rust-src
-      - uses: actions-rs/cargo@v1
-        with:
-          command: doc
-          args: --all --no-deps
-      - uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/doc
+          path: target/doc
+      - id: deployment
+        uses: actions/deploy-pages@v4
