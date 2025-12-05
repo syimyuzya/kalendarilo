@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["kalendarilo",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.91.1/core/convert/trait.From.html\" title=\"trait core::convert::From\">From</a>&lt;<a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tai.html\" title=\"struct kalendarilo::time_scales::Tai\">Tai</a>&gt; for <a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tt.html\" title=\"struct kalendarilo::time_scales::Tt\">Tt</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.91.1/core/convert/trait.From.html\" title=\"trait core::convert::From\">From</a>&lt;<a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tdb.html\" title=\"struct kalendarilo::time_scales::Tdb\">Tdb</a>&gt; for <a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tai.html\" title=\"struct kalendarilo::time_scales::Tai\">Tai</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.91.1/core/convert/trait.From.html\" title=\"trait core::convert::From\">From</a>&lt;<a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tdb.html\" title=\"struct kalendarilo::time_scales::Tdb\">Tdb</a>&gt; for <a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tt.html\" title=\"struct kalendarilo::time_scales::Tt\">Tt</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.91.1/core/convert/trait.From.html\" title=\"trait core::convert::From\">From</a>&lt;<a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tt.html\" title=\"struct kalendarilo::time_scales::Tt\">Tt</a>&gt; for <a class=\"struct\" href=\"kalendarilo/time_scales/struct.Tai.html\" title=\"struct kalendarilo::time_scales::Tai\">Tai</a>"]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[1620]}

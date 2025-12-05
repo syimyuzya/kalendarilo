@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":[["NUM_CHINESE","漢數字，第 `1..=9` 項分別為「一」到「九」。為便於格式化日期，第 0 項為「十」。"]],"fn":[["day","取得日名，前十日為「初一」到「初十」，第 21 至 29 日為「廿一」到「廿九」。"],["month","取得月名（含「月」字）。十一、十二月稱「冬月」「臘月」。"],["sexagenary","干支序號轉為文本形式。"],["solar_term","節氣序號轉為名稱。`1..=24` 分別為立春到大寒。"]]};
+window.SIDEBAR_ITEMS = {"constant":["NUM_CHINESE"],"fn":["day","month","sexagenary","solar_term"]};

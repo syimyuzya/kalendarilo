@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Tai","International atomic time, represented in Julian date (JD)."],["Tdb","Barycentric dynamic time, represented in Julian date (JD)."],["Tt","Terristrial time, represented in Julian date (JD)."],["Ut","Universal time, the actual civil time used for determining the actual date at a given time point."]]};
+window.SIDEBAR_ITEMS = {"struct":["Tai","Tdb","Tt","Ut"]};
