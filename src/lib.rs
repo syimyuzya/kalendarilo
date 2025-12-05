@@ -34,7 +34,7 @@
 //! - Gregorian computus (for calculating date of Easter)
 //!     - (Possibly) full Gregorian lunisolar calendar
 //! - Timezone-neutrual version of Chinese calendar (differs slightly from the
-//!     standard version in some corner cases)
+//!   standard version in some corner cases)
 //! - Chinese calendar before 1973
 //!
 //! I wrote this primarily for my own use, so the design and development of

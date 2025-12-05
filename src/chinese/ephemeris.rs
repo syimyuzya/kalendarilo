@@ -4,7 +4,7 @@
 
 use std::num::ParseFloatError;
 use std::num::ParseIntError;
-use std::sync::Once;
+use std::sync::LazyLock;
 
 use crate::time_scales::Tdb;
 
@@ -19,26 +19,18 @@ pub struct Annus {
     pub moon_phase: [[Tdb; 4]; 15],
 }
 
-static mut DATA: Vec<Annus> = Vec::new();
-static INIT: Once = Once::new();
+static DATA: LazyLock<Vec<Annus>> = LazyLock::new(|| {
+    parse_raw_data().unwrap_or_else(|e| panic!("error parsing ephemeris data: {}", e))
+});
 
 impl Annus {
     /// 取得公元 `annus` 年對應的歳的曆表。
     ///
     /// 無數據則返回 `None`。
     pub fn get(annus: i32) -> Option<&'static Self> {
-        INIT.call_once(|| {
-            let res =
-                parse_raw_data().unwrap_or_else(|e| panic!("error parsing ephemeris data: {}", e));
-            unsafe {
-                DATA = res;
-            }
-        });
-        unsafe {
-            DATA.binary_search_by_key(&annus, |an| an.annus)
-                .ok()
-                .map(|i| &DATA[i])
-        }
+        DATA.binary_search_by_key(&annus, |an| an.annus)
+            .ok()
+            .map(|i| &DATA[i])
     }
 }
 

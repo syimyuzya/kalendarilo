@@ -136,7 +136,7 @@ impl Ut {
 mod leap_seconds {
     use super::{Tai, Tt};
     use crate::date::Date;
-    use std::sync::Once;
+    use std::sync::LazyLock;
 
     pub const DATES: &[(i32, i32, i32)] = &[
         (1972, 6, 30),
@@ -182,43 +182,32 @@ mod leap_seconds {
         pub delta_secs: i32,
     }
 
-    static mut COMPUTED: Data = Data {
-        starts: Tai(0.0),
-        leap_seconds: vec![],
-        expires: Tai(0.0),
-        c2: 0.0,
-    };
-    static INIT: Once = Once::new();
-
-    pub fn data() -> &'static Data {
-        INIT.call_once(|| {
-            let starts =
-                Tai(Date::from_gregorian(1972, 1, 1).unwrap().jdn() as f64 + 10.0 / 86400.0);
-            unsafe {
-                COMPUTED.starts = starts;
-                COMPUTED.leap_seconds.reserve_exact(DATES.len());
-            }
-            for (delta_secs, &(y, m, d)) in (10..).zip(DATES) {
-                let jdn = Date::from_gregorian(y, m, d)
-                    .unwrap_or_else(|| panic!("date not recognized: {:?}", (y, m, d)))
-                    .jdn();
-                let tai = Tai(jdn as f64 + (43199 + delta_secs) as f64 / 86400.0);
-                unsafe {
-                    COMPUTED.leap_seconds.push(LeapSecond { tai, delta_secs });
-                }
-            }
-            let (y, m, d) = DATE_EXPIRES;
+    static DATA: LazyLock<Data> = LazyLock::new(|| {
+        let starts = Tai(Date::from_gregorian(1972, 1, 1).unwrap().jdn() as f64 + 10.0 / 86400.0);
+        let mut leap_seconds = Vec::with_capacity(DATES.len());
+        for (delta_secs, &(y, m, d)) in (10..).zip(DATES) {
             let jdn = Date::from_gregorian(y, m, d)
                 .unwrap_or_else(|| panic!("date not recognized: {:?}", (y, m, d)))
                 .jdn();
-            let tai = Tai(jdn as f64 + (43199 + 10 + DATES.len()) as f64 / 86400.0);
-            let c2 = (DATES.len() + 10) as f64 - estimate(tai);
-            unsafe {
-                COMPUTED.expires = tai;
-                COMPUTED.c2 = c2;
-            }
-        });
-        unsafe { &COMPUTED }
+            let tai = Tai(jdn as f64 + (43199 + delta_secs) as f64 / 86400.0);
+            leap_seconds.push(LeapSecond { tai, delta_secs });
+        }
+        let (y, m, d) = DATE_EXPIRES;
+        let jdn = Date::from_gregorian(y, m, d)
+            .unwrap_or_else(|| panic!("date not recognized: {:?}", (y, m, d)))
+            .jdn();
+        let tai = Tai(jdn as f64 + (43199 + 10 + DATES.len()) as f64 / 86400.0);
+        let c2 = (DATES.len() + 10) as f64 - estimate(tai);
+        Data {
+            starts,
+            leap_seconds,
+            expires: tai,
+            c2,
+        }
+    });
+
+    pub fn data() -> &'static Data {
+        &DATA
     }
 
     pub fn estimate<T: Into<Tt>>(tt: T) -> f64 {
