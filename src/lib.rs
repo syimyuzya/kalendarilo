@@ -6,7 +6,7 @@
 //!
 //! # Examples
 //!
-//! Basic usage with [`Date`](date::Date):
+//! Basic usage with [`Date`]:
 //!
 //! ```
 //! use kalendarilo::Date;
