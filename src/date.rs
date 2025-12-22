@@ -37,14 +37,15 @@ impl Date {
     /// ```
     pub fn from_gregorian(year: i32, month: u32, day: u32) -> Option<Self> {
         let (y, m, d) = (year as i64, month as i64, day as i64);
-        u32::try_from(
+        let jdn = u32::try_from(
             (1461 * (y + 4800 + (m - 14) / 12)) / 4 + (367 * (m - 2 - 12 * ((m - 14) / 12))) / 12
                 - (3 * ((y + 4900 + (m - 14) / 12) / 100)) / 4
                 + d
                 - 32075,
         )
-        .map(Self::from_jdn)
-        .ok()
+        .ok()?;
+        let maybe_valid = Self::from_jdn(jdn);
+        (maybe_valid.gregorian() == (year, month, day)).then_some(maybe_valid)
     }
     /// Represents the date in Gregorian calendar.
     ///
@@ -219,6 +220,12 @@ mod tests {
         assert_eq!(2440588, date.jdn());
         let date = Date::from_gregorian(2021, 9, 8).unwrap();
         assert_eq!(2459466, date.jdn());
+    }
+
+    #[test]
+    fn from_gregorian_invalid() {
+        assert_eq!(None, Date::from_gregorian(2026, 1, 0));
+        assert_eq!(None, Date::from_gregorian(2025, 12, 32));
     }
 
     #[test]
