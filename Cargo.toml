@@ -1,6 +1,6 @@
 [package]
 name = "kalendarilo"
-version = "0.1.4"
+version = "0.2.0"
 publish = false
 edition = "2024"
 rust-version = "1.91.1"
