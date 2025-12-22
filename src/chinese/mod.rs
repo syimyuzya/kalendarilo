@@ -47,12 +47,12 @@ pub struct NewMoon {
 /// 月名，`Common` 為平月，`Leap` 為閏月。
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum Month {
-    Common(i32),
-    Leap(i32),
+    Common(u32),
+    Leap(u32),
 }
 impl Month {
     /// 取得月序號，無論平閏。
-    pub fn num(&self) -> i32 {
+    pub fn num(&self) -> u32 {
         use Month::*;
         *match self {
             Common(v) | Leap(v) => v,
@@ -172,7 +172,7 @@ impl Annus {
     ///
     /// assert_eq!(Ok((1999, Common(11), 25)), annus.ymd_for(date));
     /// ```
-    pub fn ymd_for(&self, date: Date) -> Result<(i32, Month, i32), OtherAnnus> {
+    pub fn ymd_for(&self, date: Date) -> Result<(i32, Month, u32), OtherAnnus> {
         let begin = self.months[0].date;
         let end = self.months.last().unwrap().date;
 
@@ -188,7 +188,7 @@ impl Annus {
             .take_while(|m| m.date <= date)
             .last()
             .unwrap();
-        let d = (date.jdn() + 1 - m.date.jdn()) as i32;
+        let d = date.jdn() - m.date.jdn() + 1;
         let y = if m.month.num() >= 11 {
             self.annus - 1
         } else {
@@ -218,7 +218,7 @@ impl Annus {
     ///
     /// assert_eq!(Ok((2000, 22, 10)), annus.solar_term_for(date)); // 冬至過後第 10 天
     /// ```
-    pub fn solar_term_for(&self, date: Date) -> Result<(i32, i32, i32), SolarTermErr> {
+    pub fn solar_term_for(&self, date: Date) -> Result<(i32, u32, u32), SolarTermErr> {
         use self::OtherAnnus::*;
         use SolarTermErr::*;
         if date < self.months[0].date {
@@ -238,7 +238,7 @@ impl Annus {
         }
         let idx = self.ephemeris.solar_term[..24].partition_point(|&tdb| date_cst(tdb) <= date) - 1;
         let off = date - date_cst(self.ephemeris.solar_term[idx]);
-        Ok((self.annus, (idx as i32 + 21) % 24 + 1, off))
+        Ok((self.annus, (idx as u32 + 21) % 24 + 1, off))
     }
 }
 
@@ -270,8 +270,8 @@ pub fn date_cst(tdb: Tdb) -> Date {
 ///
 /// assert_eq!(1, sexagenary_for_year(-2696));
 /// ```
-pub fn sexagenary_for_year(year: i32) -> i32 {
-    (year + 2696).rem_euclid(60) + 1
+pub fn sexagenary_for_year(year: i32) -> u32 {
+    (year.rem_euclid(60) as u32 + 2696) % 60 + 1
 }
 
 #[cfg(test)]
@@ -339,9 +339,9 @@ mod tests {
         let annus = Annus::new(2017).unwrap();
         for (std, month) in stds.iter().zip(&annus.months) {
             let std_month = if std.0 > 0 {
-                Month::Common(std.0)
+                Month::Common(std.0 as u32)
             } else {
-                Month::Leap(-std.0)
+                Month::Leap(-std.0 as u32)
             };
             assert_eq!(
                 (std_month, std.1.into()),

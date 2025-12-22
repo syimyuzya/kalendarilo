@@ -27,6 +27,8 @@ pub struct Tdb(pub f64);
 #[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub struct Tt(pub f64);
 
+const TT_MINUS_TAI: f64 = 32.184 / 86400.0;
+
 impl From<Tdb> for Tt {
     fn from(tdb: Tdb) -> Tt {
         Tt(tdb.0)
@@ -35,7 +37,7 @@ impl From<Tdb> for Tt {
 
 impl From<Tai> for Tt {
     fn from(tai: Tai) -> Tt {
-        Tt(tai.0 + 32.184 / 86400.0)
+        Tt(tai.0 + TT_MINUS_TAI)
     }
 }
 
@@ -46,7 +48,7 @@ pub struct Tai(pub f64);
 
 impl From<Tt> for Tai {
     fn from(tt: Tt) -> Tai {
-        Tai(tt.0 - 32.184 / 86400.0)
+        Tai(tt.0 - TT_MINUS_TAI)
     }
 }
 
@@ -109,7 +111,7 @@ impl Ut {
 
         let ls = match leap_seconds.partition_point(|ls| ls.tai <= tai) {
             0 => return Ut(tai.0 - 10.0 / 86400.0),
-            i => &leap_seconds[i - 1],
+            i => leap_seconds[i - 1],
         };
         let leap = (tai.0 - ls.tai.0).min(2.0) / 2.0;
         Ut(tai.0 - (ls.delta_secs as f64 + leap) / 86400.0)
@@ -138,7 +140,7 @@ mod leap_seconds {
     use crate::date::Date;
     use std::sync::LazyLock;
 
-    pub const DATES: &[(i32, i32, i32)] = &[
+    pub const DATES: &[(i32, u32, u32)] = &[
         (1972, 6, 30),
         (1972, 12, 31),
         (1973, 12, 31),
@@ -167,7 +169,7 @@ mod leap_seconds {
         (2015, 6, 30),
         (2016, 12, 31),
     ];
-    pub const DATE_EXPIRES: (i32, i32, i32) = (2021, 12, 31);
+    pub const DATE_EXPIRES: (i32, u32, u32) = (2021, 12, 31);
 
     #[derive(Debug, Clone)]
     pub struct Data {
@@ -176,7 +178,7 @@ mod leap_seconds {
         pub expires: Tai,
         pub c2: f64,
     }
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Copy, Clone)]
     pub struct LeapSecond {
         pub tai: Tai,
         pub delta_secs: i32,

@@ -12,7 +12,7 @@ pub const NUM_CHINESE: &[&str] = &["十", "一", "二", "三", "四", "五", "�
 ///
 /// assert_eq!("乙巳", chinese::fmt::sexagenary(42));
 /// ```
-pub fn sexagenary(num: i32) -> String {
+pub fn sexagenary(num: u32) -> String {
     static NAME1: &[&str] = &["癸", "甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬"];
     static NAME2: &[&str] = &[
         "亥", "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌",
@@ -67,7 +67,7 @@ pub fn month(m: super::Month) -> String {
 /// # Panics
 ///
 /// 若日序號不在 `1..=30` 間則 panic。
-pub fn day(d: i32) -> String {
+pub fn day(d: u32) -> String {
     match d {
         1..=10 => "初",
         11..=19 => "十",
@@ -89,7 +89,7 @@ pub fn day(d: i32) -> String {
 ///
 /// assert_eq!("穀雨", chinese::fmt::solar_term(6));
 /// ```
-pub fn solar_term(term: i32) -> &'static str {
+pub fn solar_term(term: u32) -> &'static str {
     const NAMES: &[&str] = &[
         "大寒", "立春", "雨水", "驚蟄", "春分", "清明", "穀雨", "立夏", "小滿", "芒種", "夏至",
         "小暑", "大暑", "立秋", "處暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪",
